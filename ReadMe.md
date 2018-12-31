@@ -8,12 +8,17 @@ The web application is required to communicate with a Web APIs layer that encaps
 
 ## Getting Started
 
+clone this repository using:
 
+git clone https://github.com/adhmn4/FaceGraphImageGallery.git
 
 ### Prerequisites
 
 NodeJs minimum version 6.4
 .Net Framework Core 2 SDK
+
+navigate to ImageManager.Angular using NodeJs Command line then install dependencies using:
+npm install
 
 ### Installing
 
