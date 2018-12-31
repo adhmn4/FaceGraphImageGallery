@@ -18,12 +18,14 @@ NodeJs minimum version 6.4
 .Net Framework Core 2 SDK
 
 navigate to ImageManager.Angular using NodeJs Command line then install dependencies using:
+
 npm install
 
 ### Installing
 
 run the API application using visual studio 2017
 navigate to ImageManager.Angular using NodeJs Command line then run using:
+
 npm start
 
 ### Authenticating
