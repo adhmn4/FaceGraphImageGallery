@@ -6,6 +6,10 @@ You will use Azure storage as the backend repository for storing the images. You
  
 The web application is required to communicate with a Web APIs layer that encapsulates all the system functionality (all CRUD operations). 
 
+## Preview
+
+<img src="./preview.png" alt="App Interface">
+
 ## Getting Started
 
 clone this repository using:
