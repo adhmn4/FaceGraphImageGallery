@@ -1,0 +1,20 @@
+﻿<!-- nav -->
+<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="router.url != '/login'">
+    <div class="navbar-nav">
+        <a class="nav-item nav-link" routerLink="/">Home</a>
+        <a class="nav-item nav-link" routerLink="/images">Images</a>
+        <a class="nav-item nav-link float-right" (click)="logout()" *ngIf="currentUser">Logout</a>
+        <a class="nav-item nav-link float-right" routerLink="/login" *ngIf="!currentUser">Login</a>
+    </div>
+</nav>
+
+<!-- main app container -->
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>
