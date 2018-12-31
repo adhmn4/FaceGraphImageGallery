@@ -1,5 +1,7 @@
 ﻿import { Component } from '@angular/core';
 import swal from 'sweetalert2';
+var $ = require('jquery');
+require('fancybox')($);
 
 import { Image, ImageSnippet } from '@/_models';
 import { AuthenticationService } from '@/_services';
@@ -11,19 +13,20 @@ export class ImagesComponent {
     selectedFile: ImageSnippet;
     uploading: boolean;
     showMessage: boolean;
+    showGallery: boolean;
 
-    constructor(private imagesServiec: ImagesService, private authService: AuthenticationService) { 
+    constructor(private imagesServiec: ImagesService, private authService: AuthenticationService) {
     }
-    
+
     ngOnInit() {
         this.loadImages();
     }
-    
-    get isAuthenticated(){
+
+    get isAuthenticated() {
         return this.authService.currentUserValue != null;
     }
-    
-    deleteImage(image: Image){
+
+    deleteImage(image: Image) {
         swal({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -32,48 +35,57 @@ export class ImagesComponent {
             focusCancel: true,
             confirmButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!'
-          }).then((result) => {
+        }).then((result) => {
             if (result.value) {
                 this.imagesServiec.delete(image).pipe().subscribe(deleted => {
-                    if(deleted){
+                    if (deleted) {
                         swal("Done", "Image has been deleted", "success");
                         this.loadImages();
-                    }else{
+                    } else {
                         swal("Error!", "image couldn't be deleted :(", "error");
                     }
                 });
             }
-          })
-        
+        })
+
     }
 
-    deleteAll(_swal: any){
-        if(!this.isAuthenticated){
+    deleteAll(_swal: any) {
+        if (!this.isAuthenticated) {
             _swal.show();
             return false;
         }
         this.imagesServiec.deleteAll().pipe().subscribe(deleted => {
-            if(deleted){
+            if (deleted) {
                 swal("Done", "All images has been cleared", "success");
                 this.loadImages();
-            }else{
+            } else {
                 swal("Error!", "images couldn't be deleted :(", "error");
             }
         });
+    }
+
+    displayGallery() {
+        $.fancybox(this.images.map((each) => { return each.uri; }));
     }
 
     processImage(imageInput: any) {
         const file: File = imageInput.files[0];
         const reader = new FileReader();
         reader.addEventListener('load', (event: any) => {
-
+            if(!file.type || !file.type.toLowerCase().startsWith('image/')){
+                swal("Error!", "Only image files are allowed", "error");
+                return false;
+            }
             this.selectedFile = new ImageSnippet(event.target.result, file);
-
             this.selectedFile.pending = true;
             this.uploading = true;
             this.imagesServiec.upload(this.selectedFile.file).subscribe(
                 (res) => {
-                    this.onSuccess();
+                    if (res)
+                        this.onSuccess();
+                    else
+                        this.onError();
                 },
                 (err) => {
                     this.onError();
@@ -97,18 +109,19 @@ export class ImagesComponent {
         this.displayMessage();
     }
 
-    private displayMessage(){
+    private displayMessage() {
         this.showMessage = true;
         var self = this;
-        setTimeout(function(){
+        setTimeout(function () {
             self.showMessage = false;
             self.uploading = false;
         }, 3000);
     }
 
-    private loadImages(){
+    private loadImages() {
         this.imagesServiec.getAll().pipe().subscribe(images => {
             this.images = images;
+            this.showGallery = true;
         });
     }
 }

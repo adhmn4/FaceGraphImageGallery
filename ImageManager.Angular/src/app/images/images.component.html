@@ -2,6 +2,10 @@
     <div class="card">
         <div class="card-body pb-0">
             <div class="text-right form-group">
+                <label class="btn btn-brand btn-sm btn-light float-left" (click)="displayGallery()" *ngIf="showGallery">
+                    <i class="fa fa-photo"></i>
+                    <span>Show Gallery</span>
+                </label>
                 <label class="btn btn-brand btn-sm btn-primary">
                     <i class="fa fa-upload"></i>
                     <span>Upload Image</span>
@@ -46,7 +50,7 @@
                         <td>{{item.name}}</td>
                         <td>{{item.uri}}</td>
                         <td>
-                            <a [href]="item.uri" class="text-primary" ngbTooltip="Download Image" download target="_blank">
+                            <a data-fancybox="gallery" [href]="item.uri" class="text-primary" ngbTooltip="Download Image" download target="_blank">
                                 <fa name="download" fixed="true"></fa>
                             </a>
                         </td>

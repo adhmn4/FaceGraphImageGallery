@@ -4,7 +4,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require('path');
 
 module.exports = {
-    entry: ['./src/main.ts', './src/_custom.scss'],
+    entry: ['./src/main.ts', './src/_custom.scss', './node_modules/fancybox/dist/js/jquery.fancybox.pack.js'],
     output: {
         filename: 'dist/bundle.js'
       },
